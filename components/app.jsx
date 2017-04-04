@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
 import Card from './card.jsx';
-import { loadCards } from '../actions';
+import { loadCards, removeMatchedCards } from '../actions';
 
 class App extends Component {
   constructor(props) {
@@ -10,40 +10,39 @@ class App extends Component {
   }
 
   componentWillMount() {
-    const numbers = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
-    const suits = ['Spade', 'Club', 'Diamond', 'Heart'];
+    this.props.loadCards();
+  }
 
-    let cards = [];
-    let counter = 1;
-    numbers.forEach((number) => {
-      suits.forEach((suit) => {
-        cards.push({ id: counter, number, suit, revealed: false });
-        counter++;
-      });
-    });
-
-    this.props.loadCards(cards);
+  componentDidUpdate() {
+    const { revealedCards } = this.props;
+    if (revealedCards.length === 2) {
+      if (revealedCards[0].number == revealedCards[1].number) {
+        this.props.removeMatchedCards();
+      } else {
+        // this.props.concealCards();
+      }
+    }
   }
 
   render() {
-    const cards = this.props.cards.map((card, index) => {
+    const activeCards = this.props.activeCards.map((card, index) => {
       return <Card key={index} {...card} />;
     });
-    return <div>{ cards }</div>;
+    return <div>{ activeCards }</div>;
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    cards: state.cards
+    activeCards: state.cards.active,
+    revealedCards: state.cards.revealed
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadCards: (cards) => {
-      dispatch(loadCards(cards))
-    }
+    loadCards: (cards) => { dispatch(loadCards(cards)) },
+    removeMatchedCards: () => { dispatch(removeMatchedCards()) }
   }
 }
 

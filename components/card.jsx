@@ -29,7 +29,7 @@ class Card extends Component {
 
   render() {
     return (
-      <div style={styles.container} onClick={this.props.flipCard.bind(this, this.props.id)}>
+      <div style={styles.container} onClick={this.props.flipCard.bind(this, this.props)}>
         <div style={styles.innerContainer}>
           { this.props.revealed ?
             <span>{ this.props.number } { this.props.suit }</span> :
@@ -43,8 +43,8 @@ class Card extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    flipCard: (id) => {
-      dispatch(flipCard(id))
+    flipCard: (card) => {
+      dispatch(flipCard(card))
     }
   }
 }
