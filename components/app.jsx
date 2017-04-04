@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import Card from './card.jsx';
+import { connect } from 'react-redux'
 
-export default class App extends Component {
+import Card from './card.jsx';
+import { loadCards } from '../actions';
+
+class App extends Component {
   constructor(props) {
     super(props);
   }
@@ -11,19 +14,37 @@ export default class App extends Component {
     const suits = ['Spade', 'Club', 'Diamond', 'Heart'];
 
     let cards = [];
+    let counter = 1;
     numbers.forEach((number) => {
       suits.forEach((suit) => {
-        cards.push({ number, suit })
+        cards.push({ id: counter, number, suit, revealed: false });
+        counter++;
       });
     });
 
-    this.setState({ cards });
+    this.props.loadCards(cards);
   }
 
   render() {
-    const cards = this.state.cards.map((card, index) => {
+    const cards = this.props.cards.map((card, index) => {
       return <Card key={index} {...card} />;
     });
     return <div>{ cards }</div>;
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    cards: state.cards
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadCards: (cards) => {
+      dispatch(loadCards(cards))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

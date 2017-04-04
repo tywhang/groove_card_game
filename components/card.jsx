@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+
+import { flipCard } from '../actions';
 
 const styles = {
   container: {
@@ -19,26 +22,31 @@ const styles = {
   }
 }
 
-export default class Card extends Component {
+class Card extends Component {
   constructor(props) {
     super(props);
-    this.state = { covered: true };
-  }
-
-  flip() {
-    this.setState({ covered: !this.state.covered });
   }
 
   render() {
     return (
-      <div style={styles.container} onClick={this.flip.bind(this)}>
+      <div style={styles.container} onClick={this.props.flipCard.bind(this, this.props.id)}>
         <div style={styles.innerContainer}>
-          { this.state.covered ?
-            <span>?</span> :
-            <span>{ this.props.number } { this.props.suit }</span>
+          { this.props.revealed ?
+            <span>{ this.props.number } { this.props.suit }</span> :
+            <span>?</span>
           }
         </div>
       </div>
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    flipCard: (id) => {
+      dispatch(flipCard(id))
+    }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Card);
