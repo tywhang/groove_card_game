@@ -7,7 +7,7 @@ const card = (state = {}, action) => {
       return Object.assign({}, state, { revealed: !state.revealed });
     case 'REMOVE_MATCHED_CARDS':
       if (state.revealed) {
-        return Object.assign({}, state, { removed: true, revealed: false })
+        return Object.assign({}, state, { removed: true, revealed: false });
       }
     case 'CONCEAL_CARDS':
       if (state.revealed) {
@@ -19,7 +19,7 @@ const card = (state = {}, action) => {
   }
 }
 
-const cards = (state = { active: [], revealed: [], matched: [] }, action) => {
+const cards = (state = { active: [], revealed: [], matched: [], disabled: false }, action) => {
   switch (action.type) {
     case 'LOAD_CARDS':
       return Object.assign({}, state, { active: action.activeCards });
@@ -34,11 +34,19 @@ const cards = (state = { active: [], revealed: [], matched: [] }, action) => {
       return Object.assign({}, state, {
         active: state.active.map(c => card(c, action)),
         revealed: [],
-        matched: [...state.matched, state.active.filter(c => c.id === state.revealed[0].id || c.id === state.revealed[1].id)]
+        matched: [...state.matched, state.active.filter(c => c.id === state.revealed[0].id || c.id === state.revealed[1].id)],
+        disabled: false
       });
 
     case 'CONCEAL_CARDS':
-      return Object.assign({}, state, { active: state.active.map(c => card(c, action)), revealed: [] });
+      return Object.assign({}, state, {
+        active: state.active.map(c => card(c, action)),
+        revealed: [],
+        disabled: false
+      });
+
+    case 'DISABLE_CARDS':
+      return Object.assign({}, state, { disabled: true });
     default:
       return state;
   }

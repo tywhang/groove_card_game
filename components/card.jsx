@@ -8,8 +8,7 @@ const styles = {
     borderWidth: 1,
     borderStyle: 'solid',
     cursor: 'pointer',
-    margin: '4px',
-    padding: '12px'
+    margin: '4px'
   },
   inner: {
     display: 'flex',
@@ -17,7 +16,8 @@ const styles = {
     justifyContent: 'center',
     flexDirection: 'column',
     height: '60px',
-    width: '60px'
+    width: '60px',
+    padding: '12px'
   }
 }
 
@@ -31,7 +31,7 @@ class Card extends Component {
       <div style={styles.container}>
         { this.props.removed ?
           <div style={styles.inner} /> :
-          <div style={styles.inner} onClick={this.props.flipCard.bind(this, this.props)}>
+          <div style={styles.inner} onClick={!this.props.disabled && this.props.flipCard.bind(this, this.props)}>
             { this.props.revealed ?
               <span>{ this.props.number } { this.props.suit }</span> :
               <span>?</span>
@@ -43,6 +43,13 @@ class Card extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  console.log(state.cards.disabled)
+  return {
+    disabled: state.cards.disabled
+  };
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
     flipCard: (card) => {
@@ -51,4 +58,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Card);
+export default connect(mapStateToProps, mapDispatchToProps)(Card);

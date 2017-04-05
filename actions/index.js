@@ -2,7 +2,7 @@ export const flipCard = (card) => {
   return {
     type: 'FLIP_CARD',
     card
-  }
+  };
 }
 
 export const loadCards = () => {
@@ -21,17 +21,23 @@ export const loadCards = () => {
   return {
     type: 'LOAD_CARDS',
     activeCards
-  }
+  };
 }
 
 export const removeMatchedCards = () => {
   return {
     type: 'REMOVE_MATCHED_CARDS'
-  }
+  };
 }
 
 export const concealCards = () => {
   return {
     type: 'CONCEAL_CARDS'
-  }
+  };
+}
+
+export const disableCards = () => {
+  return {
+    type: 'DISABLE_CARDS'
+  };
 }

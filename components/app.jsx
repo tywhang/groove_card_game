@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
-import { loadCards, removeMatchedCards, concealCards } from '../actions';
+import { loadCards, removeMatchedCards, concealCards, disableCards } from '../actions';
 import Card from './card.jsx';
 import Scoreboard from './scoreboard.jsx';
 
@@ -17,10 +17,11 @@ class App extends Component {
   componentDidUpdate() {
     const { revealedCards } = this.props;
     if (revealedCards.length === 2) {
+      this.props.disableCards();
       if (revealedCards[0].number == revealedCards[1].number) {
-        this.props.removeMatchedCards();
+        setTimeout(this.props.removeMatchedCards, 1000);
       } else {
-        this.props.concealCards();
+        setTimeout(this.props.concealCards, 1000);
       }
     }
   }
@@ -50,7 +51,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loadCards: (cards) => { dispatch(loadCards(cards)) },
     removeMatchedCards: () => { dispatch(removeMatchedCards()) },
-    concealCards: () => { dispatch(concealCards()) }
+    concealCards: () => { dispatch(concealCards()) },
+    disableCards: () => { dispatch(disableCards()) }
   }
 }
 
