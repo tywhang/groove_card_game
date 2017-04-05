@@ -44,7 +44,6 @@ class Card extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.cards.disabled)
   return {
     disabled: state.cards.disabled
   };
