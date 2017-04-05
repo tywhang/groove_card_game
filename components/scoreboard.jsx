@@ -6,7 +6,7 @@ class Scoreboard extends Component {
     const { matched } = this.props;
 
     const pairs = matched.map((pair) => {
-      return <p>{pair[0].number}-{pair[0].suit} & {pair[1].number}-{pair[1].suit}</p>
+      return <p key={ pair.toString() }>{pair[0].number}-{pair[0].suit} & {pair[1].number}-{pair[1].suit}</p>
     })
     return (
       <div style={{flex: 1}}>

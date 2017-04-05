@@ -31,8 +31,8 @@ class App extends Component {
     });
     return (
       <div style={{display: 'flex'}}>
-        <div style={{flex: 3}}>{ activeCards }</div>
         <Scoreboard />
+        <div style={{flex: 3, display: 'flex', flexWrap: 'wrap'}}>{ activeCards }</div>
       </div>
     );
   }

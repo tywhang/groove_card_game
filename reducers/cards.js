@@ -5,6 +5,10 @@ const card = (state = {}, action) => {
         return state;
       }
       return Object.assign({}, state, { revealed: !state.revealed });
+    case 'REMOVE_MATCHED_CARDS':
+      if (state.revealed) {
+        return Object.assign({}, state, { removed: true, revealed: false })
+      }
     case 'CONCEAL_CARDS':
       if (state.revealed) {
         return Object.assign({}, state, { revealed: false });
@@ -23,11 +27,12 @@ const cards = (state = { active: [], revealed: [], matched: [] }, action) => {
     case 'FLIP_CARD':
       return Object.assign({}, state, {
         active: state.active.map(c => card(c, action)),
-        revealed: [...state.revealed, Object.assign({}, action.card, { revealed: true })] });
+        revealed: [...state.revealed, Object.assign({}, action.card, { revealed: true })]
+      });
 
     case 'REMOVE_MATCHED_CARDS':
       return Object.assign({}, state, {
-        active: state.active.filter(c => c.id !== state.revealed[0].id && c.id !== state.revealed[1].id),
+        active: state.active.map(c => card(c, action)),
         revealed: [],
         matched: [...state.matched, state.active.filter(c => c.id === state.revealed[0].id || c.id === state.revealed[1].id)]
       });

@@ -13,7 +13,7 @@ export const loadCards = () => {
   let counter = 0;
   numbers.forEach((number) => {
     suits.forEach((suit) => {
-      activeCards.push({ id: counter, number, suit, revealed: false });
+      activeCards.push({ id: counter, number, suit, revealed: false, removed: false });
       counter++;
     });
   });
