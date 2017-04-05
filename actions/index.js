@@ -29,3 +29,9 @@ export const removeMatchedCards = () => {
     type: 'REMOVE_MATCHED_CARDS'
   }
 }
+
+export const concealCards = () => {
+  return {
+    type: 'CONCEAL_CARDS'
+  }
+}

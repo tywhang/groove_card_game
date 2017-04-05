@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
 import Card from './card.jsx';
-import { loadCards, removeMatchedCards } from '../actions';
+import { loadCards, removeMatchedCards, concealCards } from '../actions';
 
 class App extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class App extends Component {
       if (revealedCards[0].number == revealedCards[1].number) {
         this.props.removeMatchedCards();
       } else {
-        // this.props.concealCards();
+        this.props.concealCards();
       }
     }
   }
@@ -42,7 +42,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     loadCards: (cards) => { dispatch(loadCards(cards)) },
-    removeMatchedCards: () => { dispatch(removeMatchedCards()) }
+    removeMatchedCards: () => { dispatch(removeMatchedCards()) },
+    concealCards: () => { dispatch(concealCards()) }
   }
 }
 
