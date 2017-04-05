@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 class Scoreboard extends Component {
   render() {
     const { matched } = this.props;
+    const isFinished = matched.length === 26;
 
     const pairs = matched.map((pair) => {
       return (
@@ -16,6 +17,7 @@ class Scoreboard extends Component {
     return (
       <div style={{flex: 1}}>
         <h2>Matched Pairs</h2>
+        { isFinished && <h3>Congratulations. You found all the pairs!!!</h3> }
         <h5>Total Pairs: { matched.length }</h5>
         { pairs }
       </div>
