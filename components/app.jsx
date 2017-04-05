@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
-import Card from './card.jsx';
 import { loadCards, removeMatchedCards, concealCards } from '../actions';
+import Card from './card.jsx';
+import Scoreboard from './scoreboard.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -28,14 +29,20 @@ class App extends Component {
     const activeCards = this.props.activeCards.map((card, index) => {
       return <Card key={index} {...card} />;
     });
-    return <div>{ activeCards }</div>;
+    return (
+      <div style={{display: 'flex'}}>
+        <div style={{flex: 3}}>{ activeCards }</div>
+        <Scoreboard />
+      </div>
+    );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
     activeCards: state.cards.active,
-    revealedCards: state.cards.revealed
+    revealedCards: state.cards.revealed,
+    matchedCards: state.cards.matched
   }
 }
 
