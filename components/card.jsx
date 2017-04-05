@@ -51,9 +51,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    flipCard: (card) => {
-      dispatch(flipCard(card))
-    }
+    flipCard: (card) => { dispatch(flipCard(card)) }
   }
 }
 
