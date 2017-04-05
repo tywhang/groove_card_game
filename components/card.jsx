@@ -30,7 +30,7 @@ class Card extends Component {
     return (
       <div style={styles.container}>
         { this.props.removed ?
-          <div style={styles.inner}></div> :
+          <div style={styles.inner} /> :
           <div style={styles.inner} onClick={this.props.flipCard.bind(this, this.props)}>
             { this.props.revealed ?
               <span>{ this.props.number } { this.props.suit }</span> :
