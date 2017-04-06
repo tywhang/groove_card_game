@@ -4,7 +4,7 @@ const card = (state = {}, action) => {
       if (state.id !== action.card.id) {
         return state;
       }
-      return Object.assign({}, state, { revealed: !state.revealed });
+      return Object.assign({}, state, { revealed: true });
 
     case 'REMOVE_MATCHED_CARDS':
       if (state.revealed) {
@@ -22,19 +22,20 @@ const card = (state = {}, action) => {
   }
 }
 
-const cards = (state = { active: [], revealed: [], matched: [], disabled: false, flippedCards: [] }, action) => {
+const cards = (state = { active: [], revealed: [], matched: [], disabled: false, knownCards: [] }, action) => {
   switch (action.type) {
     case 'LOAD_CARDS':
       return Object.assign({}, state, { active: action.activeCards });
 
     case 'FLIP_CARD':
-      const cardAlreadyFlipped = state.flippedCards.findIndex((c) => { return c.id === action.card.id }) > 0;
-      const flippedCards = cardAlreadyFlipped ? state.flippedCards : [...state.flippedCards, action.card];
+      const cardAlreadyFlipped = state.knownCards.findIndex((c) => { return c.id === action.card.id }) >= 0;
+      const knownCards = cardAlreadyFlipped ? [...state.knownCards] : [...state.knownCards, action.card]
+      knownCards.sort((a, b) => { return a.number === b.number ? 0 : a.number < b.number ? -1 : 1})
 
       return Object.assign({}, state, {
         active: state.active.map(c => card(c, action)),
         revealed: [...state.revealed, Object.assign({}, action.card, { revealed: true })],
-        flippedCards
+        knownCards
       });
 
     case 'REMOVE_MATCHED_CARDS':
@@ -42,7 +43,8 @@ const cards = (state = { active: [], revealed: [], matched: [], disabled: false,
         active: state.active.map(c => card(c, action)),
         revealed: [],
         matched: [...state.matched, state.active.filter(c => c.id === state.revealed[0].id || c.id === state.revealed[1].id)],
-        disabled: false
+        disabled: false,
+        knownCards: state.knownCards.filter(c => c.id !== state.revealed[0].id && c.id !== state.revealed[1].id)
       });
 
     case 'CONCEAL_CARDS':

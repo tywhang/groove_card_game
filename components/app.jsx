@@ -6,6 +6,7 @@ import Card from './card.jsx';
 import Scoreboard from './scoreboard.jsx';
 
 let counter = 0;
+let storedMove;
 
 class App extends Component {
   constructor(props) {
@@ -29,8 +30,41 @@ class App extends Component {
   }
 
   computerMove() {
-    setTimeout(() => this.props.flipCard(this.props.activeCards[counter]), 1000)
-    counter += 4;
+    const { revealedCards, knownCards } = this.props;
+    let foundMatch = false;
+
+    // If first move,
+    if (revealedCards.length === 0) {
+      // Check if there are matches in 'known' list.
+      for (var i = 0; i < knownCards.length - 1; i++) {
+        // If true, call one and store the next.
+        if (knownCards[i].number === knownCards[i + 1].number) {
+          foundMatch = true;
+          this.props.flipCard(knownCards[i]);
+          storedMove = knownCards[i + 1];
+          break;
+        }
+      }
+
+      // If not, click on random card that's not removed.
+      if (!foundMatch) {
+        setTimeout(() => this.props.flipCard(this.props.activeCards[counter]), 1000)
+        counter += 4;
+      }
+    }
+    // If second move,
+    else {
+      // If stored move, do that move.
+      if (storedMove) {
+        this.props.flipCard(storedMove);
+        storedMove = null;
+      } else {
+        // Check if first card matches with any in the 'known' list.
+        // Else click on a random card that's not removed.
+        setTimeout(() => this.props.flipCard(this.props.activeCards[counter]), 1000)
+        counter += 4;
+      }
+    }
   }
 
   render() {
@@ -51,7 +85,7 @@ const mapStateToProps = (state) => {
     activeCards: state.cards.active,
     revealedCards: state.cards.revealed,
     matchedCards: state.cards.matched,
-    flippedCards: state.cards.flippedCards,
+    knownCards: state.cards.knownCards,
     isPlayerTurn: state.game.isPlayerTurn
   }
 }
