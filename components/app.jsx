@@ -18,7 +18,10 @@ class App extends Component {
   }
 
   componentDidUpdate() {
-    const { revealedCards, isPlayerTurn } = this.props;
+    const { revealedCards, isPlayerTurn, computerMatched, playerMatched } = this.props;
+    const isFinished = computerMatched.length + playerMatched.length === 26;
+    if (isFinished) return;
+
     if (revealedCards.length === 2) {
       this.props.disableCards();
       if (revealedCards[0].number == revealedCards[1].number) {
@@ -63,9 +66,9 @@ class App extends Component {
   }
 
   clickRandom() {
-    const onBoard = this.props.activeCards.filter(c => !c.removed)
+    const onBoard = this.props.activeCards.filter(c => !c.removed && !c.revealed);
     const random = Math.floor(Math.random() * onBoard.length);
-    setTimeout(((random) => this.props.flipCard(this.props.activeCards[random])).bind(null, random), 1000);
+    setTimeout(((random) => this.props.flipCard(onBoard[random])).bind(null, random), 1000);
   }
 
   render() {
@@ -87,7 +90,9 @@ const mapStateToProps = (state) => {
     revealedCards: state.cards.revealed,
     matchedCards: state.cards.matched,
     knownCards: state.cards.knownCards,
-    isPlayerTurn: state.cards.isPlayerTurn
+    isPlayerTurn: state.cards.isPlayerTurn,
+    computerMatched: state.cards.computerMatched,
+    playerMatched: state.cards.playerMatched
   }
 }
 

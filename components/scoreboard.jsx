@@ -12,14 +12,22 @@ class Scoreboard extends Component {
     });
   }
 
+  endGameMessage() {
+    const { computerMatched, playerMatched } = this.props;
+
+    if (computerMatched.length > playerMatched.length) return 'Computer Won'
+    if (computerMatched.length < playerMatched.length) return 'Player Won';
+    return 'The game ended in a tie'
+  }
+
   render() {
     const { computerMatched, playerMatched, isPlayerTurn } = this.props;
-    const isFinished = computerMatched.length === 26;
+    const isFinished = computerMatched.length + playerMatched.length === 26;
 
     return (
       <div style={{flex: 1}}>
         <h3>Turn: { isPlayerTurn ? 'Player' : 'Computer' }</h3>
-        { isFinished && <h3>Congratulations. You found all the pairs!!!</h3> }
+        <h3>{ isFinished && this.endGameMessage() }</h3>
         <h4>Player Matched Pairs</h4>
         <h5>Total Pairs: { playerMatched.length }</h5>
         { this.formatPairs(playerMatched) }
