@@ -33,14 +33,14 @@ class App extends Component {
     const { revealedCards, knownCards } = this.props;
     let foundMatch = false;
 
-    // If first move,
+    // If first move,`
     if (revealedCards.length === 0) {
       // Check if there are matches in 'known' list.
       for (var i = 0; i < knownCards.length - 1; i++) {
         // If true, call one and store the next.
         if (knownCards[i].number === knownCards[i + 1].number) {
           foundMatch = true;
-          this.props.flipCard(knownCards[i]);
+          setTimeout(((i) => this.props.flipCard(knownCards[i])).bind(null, i), 1000);
           storedMove = knownCards[i + 1];
           break;
         }
@@ -48,7 +48,7 @@ class App extends Component {
 
       // If not, click on random card that's not removed.
       if (!foundMatch) {
-        setTimeout(() => this.props.flipCard(this.props.activeCards[counter]), 1000)
+        setTimeout(((counter) => this.props.flipCard(this.props.activeCards[counter])).bind(null, counter), 1000);
         counter += 4;
       }
     }
@@ -56,12 +56,12 @@ class App extends Component {
     else {
       // If stored move, do that move.
       if (storedMove) {
-        this.props.flipCard(storedMove);
+        setTimeout(((storedMove) => this.props.flipCard(storedMove)).bind(null, storedMove), 1000);
         storedMove = null;
       } else {
         // Check if first card matches with any in the 'known' list.
         // Else click on a random card that's not removed.
-        setTimeout(() => this.props.flipCard(this.props.activeCards[counter]), 1000)
+        setTimeout(((counter) => this.props.flipCard(this.props.activeCards[counter])).bind(null, counter), 1000);
         counter += 4;
       }
     }
