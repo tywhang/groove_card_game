@@ -9,10 +9,6 @@ let counter = 0;
 let storedMove;
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentWillMount() {
     this.props.loadCards();
   }
@@ -46,7 +42,7 @@ class App extends Component {
         }
       }
 
-      if (!foundMatch) { this.clickRandom(); }
+      if (!foundMatch) this.clickRandom();
     } else {
       if (storedMove) {
         setTimeout(((storedMove) => this.props.flipCard(storedMove)).bind(null, storedMove), 1000);
@@ -60,7 +56,7 @@ class App extends Component {
           }
         };
 
-        if (!foundMatch) { this.clickRandom(); }
+        if (!foundMatch) this.clickRandom();
       }
     }
   }

@@ -8,16 +8,18 @@ const styles = {
     borderWidth: 1,
     borderStyle: 'solid',
     cursor: 'pointer',
-    margin: '4px'
+    margin: '4px',
+    height: '84px',
+    width: '84px'
   },
   inner: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
+    padding: '12px',
     height: '60px',
-    width: '60px',
-    padding: '12px'
+    width: '60px'
   }
 }
 
@@ -30,16 +32,15 @@ class Card extends Component {
     const { disabled, isPlayerTurn, revealed } = this.props;
 
     if (disabled || !isPlayerTurn || revealed) return;
-    console.log(this.props);
     this.props.flipCard(this.props);
   }
 
   render() {
     return (
-      <div style={styles.container}>
+      <div style={styles.container} onClick={ this.handleClick.bind(this) }>
         { this.props.removed ?
           <div style={styles.inner} /> :
-          <div style={styles.inner} onClick={ this.handleClick.bind(this) }>
+          <div style={styles.inner}>
             { this.props.revealed ?
               <span>{ this.props.number } { this.props.suit }</span> :
               <span>?</span>

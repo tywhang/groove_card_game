@@ -1,20 +1,14 @@
 const card = (state = {}, action) => {
   switch (action.type) {
     case 'FLIP_CARD':
-      if (state.id !== action.card.id) {
-        return state;
-      }
+      if (state.id !== action.card.id) return state;
       return Object.assign({}, state, { revealed: true });
 
     case 'REMOVE_MATCHED_CARDS':
-      if (state.revealed) {
-        return Object.assign({}, state, { removed: true, revealed: false });
-      }
+      if (state.revealed) return Object.assign({}, state, { removed: true, revealed: false });
 
     case 'CONCEAL_CARDS':
-      if (state.revealed) {
-        return Object.assign({}, state, { revealed: false });
-      }
+      if (state.revealed) return Object.assign({}, state, { revealed: false });
       return state;
 
     default:
