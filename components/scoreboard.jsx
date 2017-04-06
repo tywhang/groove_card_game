@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 
 class Scoreboard extends Component {
   formatPairs(pairs) {
-    console.log(pairs);
     return pairs.map((pair) => {
       return (
         <p key={ `${pair[0].number}-${pair[0].suit}}` }>

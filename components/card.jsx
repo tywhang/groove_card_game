@@ -26,12 +26,20 @@ class Card extends Component {
     super(props);
   }
 
+  handleClick() {
+    const { disabled, isPlayerTurn, revealed } = this.props;
+
+    if (disabled || !isPlayerTurn || revealed) return;
+    console.log(this.props);
+    this.props.flipCard(this.props);
+  }
+
   render() {
     return (
       <div style={styles.container}>
         { this.props.removed ?
           <div style={styles.inner} /> :
-          <div style={styles.inner} onClick={!this.props.disabled && this.props.isPlayerTurn && this.props.flipCard.bind(this, this.props)}>
+          <div style={styles.inner} onClick={ this.handleClick.bind(this) }>
             { this.props.revealed ?
               <span>{ this.props.number } { this.props.suit }</span> :
               <span>?</span>
