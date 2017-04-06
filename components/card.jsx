@@ -31,7 +31,7 @@ class Card extends Component {
       <div style={styles.container}>
         { this.props.removed ?
           <div style={styles.inner} /> :
-          <div style={styles.inner} onClick={!this.props.disabled && this.props.flipCard.bind(this, this.props)}>
+          <div style={styles.inner} onClick={!this.props.disabled && this.props.isPlayerTurn && this.props.flipCard.bind(this, this.props)}>
             { this.props.revealed ?
               <span>{ this.props.number } { this.props.suit }</span> :
               <span>?</span>
@@ -45,7 +45,8 @@ class Card extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    disabled: state.cards.disabled
+    disabled: state.cards.disabled,
+    isPlayerTurn: state.cards.isPlayerTurn
   };
 }
 

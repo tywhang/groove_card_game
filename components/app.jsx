@@ -87,7 +87,7 @@ const mapStateToProps = (state) => {
     revealedCards: state.cards.revealed,
     matchedCards: state.cards.matched,
     knownCards: state.cards.knownCards,
-    isPlayerTurn: state.game.isPlayerTurn
+    isPlayerTurn: state.cards.isPlayerTurn
   }
 }
 

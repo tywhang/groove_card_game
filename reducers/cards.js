@@ -22,7 +22,7 @@ const card = (state = {}, action) => {
   }
 }
 
-const cards = (state = { active: [], revealed: [], matched: [], disabled: false, knownCards: [] }, action) => {
+const cards = (state = { active: [], revealed: [], computerMatched: [], playerMatched: [], disabled: false, knownCards: [], isPlayerTurn: true }, action) => {
   switch (action.type) {
     case 'LOAD_CARDS':
       return Object.assign({}, state, { active: action.activeCards });
@@ -39,10 +39,14 @@ const cards = (state = { active: [], revealed: [], matched: [], disabled: false,
       });
 
     case 'REMOVE_MATCHED_CARDS':
+      const computerMatched = state.isPlayerTurn ? state.computerMatched : [...state.computerMatched, state.active.filter(c => c.id === state.revealed[0].id || c.id === state.revealed[1].id)]
+      const playerMatched = !state.isPlayerTurn ? state.playerMatched : [...state.playerMatched, state.active.filter(c => c.id === state.revealed[0].id || c.id === state.revealed[1].id)]
+
       return Object.assign({}, state, {
         active: state.active.map(c => card(c, action)),
         revealed: [],
-        matched: [...state.matched, state.active.filter(c => c.id === state.revealed[0].id || c.id === state.revealed[1].id)],
+        computerMatched,
+        playerMatched,
         disabled: false,
         knownCards: state.knownCards.filter(c => c.id !== state.revealed[0].id && c.id !== state.revealed[1].id)
       });
@@ -51,7 +55,8 @@ const cards = (state = { active: [], revealed: [], matched: [], disabled: false,
       return Object.assign({}, state, {
         active: state.active.map(c => card(c, action)),
         revealed: [],
-        disabled: false
+        disabled: false,
+        isPlayerTurn: !state.isPlayerTurn
       });
 
     case 'DISABLE_CARDS':
