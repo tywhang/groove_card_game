@@ -5,6 +5,7 @@ import { flipCard } from '../actions';
 
 const styles = {
   container: {
+    backgroundColor: 'white',
     borderWidth: 1,
     borderStyle: 'solid',
     cursor: 'pointer',
