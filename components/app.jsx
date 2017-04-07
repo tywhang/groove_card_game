@@ -72,7 +72,7 @@ class App extends Component {
       return <Card key={index} {...card} />;
     });
     return (
-      <div style={{display: 'flex', fontFamily: 'Helvetica', maxWidth: '74rem'}}>
+      <div style={{display: 'flex', fontFamily: 'Helvetica', maxWidth: '74rem', maxHeight: '36rem'}}>
         <Scoreboard />
         <div style={{flex: 3, display: 'flex', flexWrap: 'wrap'}}>{ activeCards }</div>
       </div>

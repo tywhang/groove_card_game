@@ -37,9 +37,7 @@ class Card extends Component {
   }
 
   renderBlackOrRed() {
-    const { suit } = this.props;
-
-    return suit === 'Diamond' || suit === 'Heart' ? { color: 'red' } : { color: 'black' };
+    return this.props.suit === 'Diamond' || this.props.suit === 'Heart' ? { color: 'red' } : { color: 'black' };
   }
 
   renderSuit() {

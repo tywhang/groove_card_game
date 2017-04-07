@@ -27,7 +27,7 @@ export const loadCards = () => {
       counter++;
     });
   });
-  // activeCards = shuffleArray(activeCards);
+  activeCards = shuffleArray(activeCards);
 
   return {
     type: 'LOAD_CARDS',
