@@ -1,6 +1,39 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
+const styles = {
+  container: {
+    backgroundColor: 'white',
+    border: '1px solid black',
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    marginRight: '4rem',
+    padding: '1rem'
+  },
+  turn: {
+    alignItems: 'center',
+    display: 'flex'
+  },
+  turnIndicator: {
+    border: '1px solid black',
+    flex: 1,
+    marginLeft: '1rem',
+    padding: '0.75rem',
+  },
+  endGameMessage: {
+    textAlign: 'center',
+    color: 'blue'
+  },
+  pairsHeader: { textAlign: 'center' },
+  pairsContainer: { display: 'flex' },
+  pairsSection: {
+    flex: 1,
+    textAlign: 'center',
+    overflowY: 'auto'
+  }
+}
+
 class Scoreboard extends Component {
   renderSuit(suit) {
     switch (suit) {
@@ -46,21 +79,19 @@ class Scoreboard extends Component {
     const isFinished = computerMatched.length + playerMatched.length === 26;
 
     return (
-      <div style={{flex: 1, display: 'flex', flexDirection: 'column', padding: '1rem', backgroundColor: 'white', border: '1px solid black', marginRight: '4rem'}}>
-        <h3 style={{display: 'flex', alignItems: 'center'}}>Turn:
-          <span style={{border: '1px solid black', padding: '0.75rem', flex: 1, marginLeft: '1rem'}}>
-            { isPlayerTurn ? 'Player' : 'Computer' }
-          </span>
+      <div style={styles.container}>
+        <h3 style={styles.turn}>Turn:
+          <span style={styles.turnIndicator}>{ isPlayerTurn ? 'Player' : 'Computer' }</span>
         </h3>
-        <h3 style={{textAlign: 'center', color: 'blue'}}>{ isFinished && this.endGameMessage() }</h3>
-        <h3 style={{textAlign: 'center'}}>Matched Pairs</h3>
-        <div style={{display: 'flex'}}>
-          <div style={{flex: 1, textAlign: 'center', overflowY: 'auto'}}>
+        <h3 style={styles.endGameMessage}>{ isFinished && this.endGameMessage() }</h3>
+        <h3 style={styles.pairsHeader}>Matched Pairs</h3>
+        <div style={styles.pairsContainer}>
+          <div style={styles.pairsSection}>
             <h4>Player</h4>
             <h5>Total Pairs: { playerMatched.length }</h5>
             { this.formatPairs(playerMatched) }
           </div>
-          <div style={{flex: 1, textAlign: 'center', overflowY: 'auto'}}>
+          <div style={styles.pairsSection}>
             <h4>Computer</h4>
             <h5>Total Pairs: { computerMatched.length }</h5>
             { this.formatPairs(computerMatched) }

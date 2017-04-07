@@ -5,8 +5,21 @@ import { loadCards, removeMatchedCards, concealCards, disableCards, flipCard } f
 import Card from './card.jsx';
 import Scoreboard from './scoreboard.jsx';
 
-let counter = 0;
 let storedMove;
+
+const styles = {
+  container: {
+    display: 'flex',
+    fontFamily: 'Helvetica',
+    maxWidth: '74rem',
+    maxHeight: '36rem'
+  },
+  cardsContainer: {
+    flex: 3,
+    display: 'flex',
+    flexWrap: 'wrap'
+  }
+}
 
 class App extends Component {
   componentWillMount() {
@@ -72,9 +85,9 @@ class App extends Component {
       return <Card key={index} {...card} />;
     });
     return (
-      <div style={{display: 'flex', fontFamily: 'Helvetica', maxWidth: '74rem', maxHeight: '36rem'}}>
+      <div style={styles.container}>
         <Scoreboard />
-        <div style={{flex: 3, display: 'flex', flexWrap: 'wrap'}}>{ activeCards }</div>
+        <div style={styles.cardsContainer}>{ activeCards }</div>
       </div>
     );
   }

@@ -21,7 +21,18 @@ const styles = {
     position: 'relative',
     height: '84px',
     width: '72px'
-  }
+  },
+  firstSuit: {
+    position: 'absolute',
+    top: '2px',
+    left: '2px'
+  },
+  secondSuit: {
+    position: 'absolute',
+    bottom: '2px',
+    right: '2px'
+  },
+  number: { fontSize: '24px' }
 }
 
 class Card extends Component {
@@ -61,9 +72,9 @@ class Card extends Component {
           <div style={styles.inner}>
             { this.props.revealed ?
               <div style={ this.renderBlackOrRed() }>
-                <span style={{position: 'absolute', top: '2px', left: '2px'}}>{ this.renderSuit() }</span>
-                <span style={{fontSize: '24px'}}>{ this.props.number }</span>
-                <span style={{position: 'absolute', bottom: '2px', right: '2px'}}>{ this.renderSuit() }</span>
+                <span style={styles.firstSuit}>{ this.renderSuit() }</span>
+                <span style={styles.number}>{ this.props.number }</span>
+                <span style={styles.secondSuit}>{ this.renderSuit() }</span>
               </div> :
               <div style={styles.inner}>
                 <span>?</span>
